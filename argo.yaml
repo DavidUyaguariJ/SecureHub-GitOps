@@ -29,7 +29,7 @@ spec:
   source:
     repoURL: https://github.com/DavidUyaguariJ/SecureHub-GitOps.git
     targetRevision: main
-    path: kubernetes/pre
+    path: kubernetes/stage
   destination:
     server: https://kubernetes.default.svc
     namespace: stage
