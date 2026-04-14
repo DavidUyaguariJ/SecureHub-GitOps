@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: daviduyaguarij/securehub-frontend:dev-58
+          image: daviduyaguarij/securehub-frontend:dev-59
           ports:
             - containerPort: 80
 ---
