@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/DavidUyaguariJ/SecureHub-GitOps.git
     targetRevision: main
-    path: kubernetes/dev
+    path: kubernetes/dev/frontend
   destination:
     server: https://kubernetes.default.svc
     namespace: dev
@@ -29,7 +29,7 @@ spec:
   source:
     repoURL: https://github.com/DavidUyaguariJ/SecureHub-GitOps.git
     targetRevision: main
-    path: kubernetes/stage
+    path: kubernetes/stage/frontend
   destination:
     server: https://kubernetes.default.svc
     namespace: stage
@@ -49,7 +49,69 @@ spec:
   source:
     repoURL: https://github.com/DavidUyaguariJ/SecureHub-GitOps.git
     targetRevision: main
-    path: kubernetes/prod
+    path: kubernetes/prod/frontend
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: securehub-backend-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/DavidUyaguariJ/SecureHub-GitOps.git
+    targetRevision: main
+    path: kubernetes/dev/backend
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: securehub-backend-stage
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/DavidUyaguariJ/SecureHub-GitOps.git
+    targetRevision: main
+    path: kubernetes/stage/backend
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: stage
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: securehub-backend-prod
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/DavidUyaguariJ/SecureHub-GitOps.git
+    targetRevision: main
+    path: kubernetes/prod/backend
   destination:
     server: https://kubernetes.default.svc
     namespace: prod
