@@ -15,9 +15,31 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: daviduyaguarij/securehub-frontend:dev-61
+          image: daviduyaguarij/securehub-frontend:dev-63
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "300m"
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 10
 ---
 apiVersion: v1
 kind: Service
