@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: stage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: daviduyaguarij/securehub-backend:stage-1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Staging"
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config-stage
+                  key: db-host
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-stage
+                  key: db-user
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-stage
+                  key: db-password
+
+            - name: RSA_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-stage
+                  key: rsa-public-key
+
+            - name: RSA_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-stage
+                  key: rsa-private-key
+
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: stage
+spec:
+  type: ClusterIP
+  selector:
+    app: backend
+  ports:
+    - port: 80
+      targetPort: 8080
