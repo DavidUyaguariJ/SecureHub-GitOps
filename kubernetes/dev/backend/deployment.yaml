@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: daviduyaguarij/securehub-backend:dev-8
+          image: daviduyaguarij/securehub-backend:dev-11
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -24,9 +24,33 @@ spec:
               value: "Development"
             - name: DB_HOST
               valueFrom:
+                configMapKeyRef:
+                  name: backend-config-dev
+                  key: db-host
+            - name: DB_USER
+              valueFrom:
                 secretKeyRef:
                   name: backend-secrets-dev
-                  key: db-host
+                  key: db-user
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-dev
+                  key: db-password
+
+            - name: RSA_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-dev
+                  key: rsa-public-key
+
+            - name: RSA_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-dev
+                  key: rsa-private-key
+
           resources:
             requests:
               memory: "256Mi"
@@ -34,16 +58,3 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: backend
-  namespace: dev
-spec:
-  type: ClusterIP
-  selector:
-    app: backend
-  ports:
-    - port: 80
-      targetPort: 8080
