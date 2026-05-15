@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: daviduyaguarij/securehub-backend:dev-27
+          image: daviduyaguarij/securehub-backend:dev-28
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -26,30 +26,37 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: backend-config-dev
-                  key: db-host
+                  key: DB_HOST
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
                   name: backend-secrets-dev
-                  key: db-user
-
+                  key: DB_USER
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: backend-secrets-dev
-                  key: db-password
-
+                  key: DB_PASSWORD
             - name: RSA_PUBLIC_KEY
               valueFrom:
                 secretKeyRef:
                   name: backend-secrets-dev
-                  key: rsa-public-key
-
+                  key: RSA_PUBLIC_KEY
             - name: RSA_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
                   name: backend-secrets-dev
-                  key: rsa-private-key
+                  key: RSA_PRIVATE_KEY
+            - name: Email__Password
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-dev
+                  key: EMAIL_PASSWORD
+            - name: Keycloak__AdminSecret
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-dev
+                  key: KEYCLOAK_ADMIN_SECRET
 
           resources:
             requests:
