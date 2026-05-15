@@ -26,37 +26,37 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: backend-config-dev
-                  key: DB_HOST
+                  key: db-host
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
                   name: backend-secrets-dev
-                  key: DB_USER
+                  key: db-user
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: backend-secrets-dev
-                  key: DB_PASSWORD
+                  key: db-password
             - name: RSA_PUBLIC_KEY
               valueFrom:
                 secretKeyRef:
                   name: backend-secrets-dev
-                  key: RSA_PUBLIC_KEY
+                  key: rsa-public-key
             - name: RSA_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
                   name: backend-secrets-dev
-                  key: RSA_PRIVATE_KEY
+                  key: rsa-private-key
             - name: Email__Password
               valueFrom:
                 secretKeyRef:
                   name: backend-secrets-dev
-                  key: EMAIL_PASSWORD
+                  key: email-password
             - name: Keycloak__AdminSecret
               valueFrom:
                 secretKeyRef:
                   name: backend-secrets-dev
-                  key: KEYCLOAK_ADMIN_SECRET
+                  key: keycloak-admin-secret
 
           resources:
             requests:
