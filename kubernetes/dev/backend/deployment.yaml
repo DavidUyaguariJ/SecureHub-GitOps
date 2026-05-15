@@ -15,18 +15,18 @@ spec:
     spec:
       containers:
         - name: backend
-          image: daviduyaguarij/securehub-backend:dev-28
+          image: daviduyaguarij/securehub-backend:dev-29
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: "Development"
-            - name: DB_HOST
+            - name: db-host
               valueFrom:
                 configMapKeyRef:
                   name: backend-config-dev
-                  key: db-host
+                  key: DB_HOST
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
