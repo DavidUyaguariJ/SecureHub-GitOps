@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: daviduyaguarij/securehub-backend:dev-29
+          image: daviduyaguarij/securehub-backend:dev-30
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -26,7 +26,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: backend-config-dev
-                  key: DB_HOST
+                  key: db-host
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
