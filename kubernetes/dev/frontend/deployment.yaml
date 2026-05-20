@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: daviduyaguarij/securehub-frontend:dev-65
+          image: daviduyaguarij/securehub-frontend:dev-66
           imagePullPolicy: Always
           ports:
             - containerPort: 80
