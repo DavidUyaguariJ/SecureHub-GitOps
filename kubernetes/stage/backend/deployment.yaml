@@ -32,24 +32,31 @@ spec:
                 secretKeyRef:
                   name: backend-secrets-stage
                   key: db-user
-
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: backend-secrets-stage
                   key: db-password
-
             - name: RSA_PUBLIC_KEY
               valueFrom:
                 secretKeyRef:
                   name: backend-secrets-stage
                   key: rsa-public-key
-
             - name: RSA_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
                   name: backend-secrets-stage
                   key: rsa-private-key
+            - name: Email__Password
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-stage
+                  key: email-password
+            - name: Keycloak__AdminSecret
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-stage
+                  key: keycloak-admin-secret
 
           resources:
             requests:
