@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: daviduyaguarij/securehub-backend:dev-36
+          image: daviduyaguarij/securehub-backend:dev-37
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -57,7 +57,26 @@ spec:
                 secretKeyRef:
                   name: backend-secrets-dev
                   key: keycloak-admin-secret
-
+            - name: RPC_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-secrets-dev
+                  key: rpc-url
+            - name: CHAIN_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-secrets-dev
+                  key: chain-id
+            - name: CONTRACT_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-secrets-dev
+                  key: contract-address
+            - name: DEPLOYER_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-dev
+                  key: deployer-private-key
           resources:
             requests:
               memory: "256Mi"
