@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: daviduyaguarij/securehub-backend:0.1.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Production"
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config-prod
+                  key: db-host
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-prod
+                  key: db-user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-prod
+                  key: db-password
+            - name: RSA_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-prod
+                  key: rsa-public-key
+            - name: RSA_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-prod
+                  key: rsa-private-key
+            - name: Email__Password
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-prod
+                  key: email-password
+            - name: Keycloak__AdminSecret
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-prod
+                  key: keycloak-admin-secret
+            - name: RPC_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config-prod
+                  key: rpc-url
+            - name: CHAIN_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config-prod
+                  key: chain-id
+            - name: CONTRACT_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config-prod
+                  key: contract-address
+            - name: DEPLOYER_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets-prod
+                  key: deployer-private-key
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: prod
+spec:
+  type: ClusterIP
+  selector:
+    app: backend
+  ports:
+    - port: 80
+      targetPort: 8080
