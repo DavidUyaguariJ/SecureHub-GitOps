@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: daviduyaguarij/securehub-backend:stage-1
+          image: daviduyaguarij/securehub-backend:stage-2
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
